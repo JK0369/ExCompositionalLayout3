@@ -9,7 +9,12 @@ import UIKit
 
 final class ViewController: UIViewController {
   private lazy var collectionView: UICollectionView = {
-    let view = UICollectionView(frame: .zero, collectionViewLayout: Self.getLayout())
+    let layout = Self.getLayout()
+    let config = UICollectionViewCompositionalLayoutConfiguration()
+    config.interSectionSpacing = 16
+    layout.configuration = config
+    
+    let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
     view.isScrollEnabled = true
     view.showsHorizontalScrollIndicator = false
     view.showsVerticalScrollIndicator = true
@@ -18,6 +23,10 @@ final class ViewController: UIViewController {
     view.backgroundColor = .clear
     view.clipsToBounds = true
     view.register(MyCell.self, forCellWithReuseIdentifier: "MyCell")
+    
+    view.register(MyHeaderFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyHeaderView")
+    view.register(MyHeaderFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyFooterView")
+    view.register(MyHeaderFooterView.self, forSupplementaryViewOfKind: "MyLeftView", withReuseIdentifier: "MyLeftView")
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -44,14 +53,41 @@ final class ViewController: UIViewController {
         
         // Group
         let groupSize = NSCollectionLayoutSize(
-          widthDimension: .fractionalWidth(1),
+          widthDimension: .fractionalWidth(0.9),
           heightDimension: .fractionalHeight(groupFractionalHeightFraction)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
+          leading: .flexible(0),
+          top: nil,
+          trailing: nil,
+          bottom: nil
+        )
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
+        
+        // header / footer
+        let headerFooterSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(100.0))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+          layoutSize: headerFooterSize,
+          elementKind: UICollectionView.elementKindSectionHeader,
+          alignment: .top
+        )
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(
+          layoutSize: headerFooterSize,
+          elementKind: UICollectionView.elementKindSectionFooter,
+          alignment: .bottom
+        )
+        let leftSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.1), heightDimension: .absolute(700))
+        let left = NSCollectionLayoutBoundarySupplementaryItem(
+          layoutSize: leftSize,
+          elementKind: "MyLeftView",
+          alignment: .leading
+        )
+        
+        section.boundarySupplementaryItems = [header, footer, left]
         return section
       default:
         let itemFractionalWidthFraction = 1.0 / 5.0 // horizontal 5개의 셀
@@ -115,5 +151,23 @@ extension ViewController: UICollectionViewDataSource {
       cell.prepare(text: items[indexPath.item].value)
     }
     return cell
+  }
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    switch kind {
+    case UICollectionView.elementKindSectionHeader:
+      let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyHeaderView", for: indexPath) as! MyHeaderFooterView
+      header.prepare(text: "헤더 타이틀")
+      return header
+    case UICollectionView.elementKindSectionFooter:
+      let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyFooterView", for: indexPath) as! MyHeaderFooterView
+      footer.prepare(text: "푸터 타이틀")
+      return footer
+    case "MyLeftView":
+      let leftView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyLeftView", for: indexPath) as! MyHeaderFooterView
+      leftView.prepare(text: "left 타이틀")
+      return leftView
+    default:
+      return UICollectionReusableView()
+    }
   }
 }
