@@ -31,16 +31,16 @@ final class ViewController: UIViewController {
     return view
   }()
   private let dataSource: [MySection] = [
-    .first((1...30).map(String.init).map(MySection.FirstItem.init(value:))),
-    .second((31...60).map(String.init).map(MySection.SecondItem.init(value:))),
+    .first((1...10).map(String.init).map(MySection.FirstItem.init(value:))),
+    .second((11...20).map(String.init).map(MySection.SecondItem.init(value:))),
   ]
   
   static func getLayout() -> UICollectionViewCompositionalLayout {
     UICollectionViewCompositionalLayout { (section, env) -> NSCollectionLayoutSection? in
       switch section {
       case 0:
-        let itemFractionalWidthFraction = 1.0 / 3.0 // horizontal 3개의 셀
-        let groupFractionalHeightFraction = 1.0 / 4.0 // vertical 4개의 셀
+        let itemFractionalWidthFraction = 1.0 / 5.0 // horizontal 5개의 셀
+        let groupFractionalHeightFraction = 1.0 / 3.0 // vertical 4개의 셀
         let itemInset: CGFloat = 2.5
         
         // Item
@@ -80,7 +80,7 @@ final class ViewController: UIViewController {
           elementKind: UICollectionView.elementKindSectionFooter,
           alignment: .bottom
         )
-        let leftSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.1), heightDimension: .absolute(700))
+        let leftSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.1), heightDimension: .fractionalHeight(0.5))
         let left = NSCollectionLayoutBoundarySupplementaryItem(
           layoutSize: leftSize,
           elementKind: "MyLeftView",
@@ -164,7 +164,8 @@ extension ViewController: UICollectionViewDataSource {
       return footer
     case "MyLeftView":
       let leftView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyLeftView", for: indexPath) as! MyHeaderFooterView
-      leftView.prepare(text: "left 타이틀")
+      leftView.backgroundColor = .gray.withAlphaComponent(0.3)
+      leftView.prepare(text: "left 타이틀", textColor: .black)
       return leftView
     default:
       return UICollectionReusableView()

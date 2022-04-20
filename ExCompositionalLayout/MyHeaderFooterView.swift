@@ -38,7 +38,9 @@ final class MyHeaderFooterView: UICollectionReusableView {
     self.prepare(text: nil)
   }
   
-  func prepare(text: String?) {
+  func prepare(text: String?, textColor: UIColor? = nil) {
     self.label.text = text
+    guard textColor != nil else { return }
+    self.label.textColor = textColor
   }
 }
