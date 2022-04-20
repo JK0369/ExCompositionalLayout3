@@ -27,6 +27,7 @@ final class ViewController: UIViewController {
     view.register(MyHeaderFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MyHeaderView")
     view.register(MyHeaderFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "MyFooterView")
     view.register(MyHeaderFooterView.self, forSupplementaryViewOfKind: "MyLeftView", withReuseIdentifier: "MyLeftView")
+    view.register(MyBadgeView.self, forSupplementaryViewOfKind: "MyBadgeView", withReuseIdentifier: "MyBadgeView")
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
   }()
@@ -93,13 +94,22 @@ final class ViewController: UIViewController {
         let itemFractionalWidthFraction = 1.0 / 5.0 // horizontal 5개의 셀
         let groupFractionalHeightFraction = 1.0 / 4.0 // vertical 4개의 셀
         let itemInset: CGFloat = 2.5
+
+        // Badge
+        let badgeItemSize = NSCollectionLayoutSize(widthDimension: .absolute(25), heightDimension: .absolute(25))
+        let badgeItemAnchor = NSCollectionLayoutAnchor(edges: [.top, .trailing], fractionalOffset: CGPoint(x: 0.3, y: -0.3))
+        let badgeItem = NSCollectionLayoutSupplementaryItem(
+          layoutSize: badgeItemSize,
+          elementKind: "MyBadgeView",
+          containerAnchor: badgeItemAnchor
+        )
         
         // Item
         let itemSize = NSCollectionLayoutSize(
           widthDimension: .fractionalWidth(itemFractionalWidthFraction),
           heightDimension: .fractionalHeight(1)
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let item = NSCollectionLayoutItem(layoutSize: itemSize, supplementaryItems: [badgeItem])
         item.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
         
         // Group
@@ -129,10 +139,10 @@ final class ViewController: UIViewController {
     super.viewDidLoad()
     self.view.addSubview(self.collectionView)
     NSLayoutConstraint.activate([
-      self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 20),
-      self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20),
-      self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -20),
-      self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
+      self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+      self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10),
+      self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -10),
+      self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
     ])
     self.collectionView.dataSource = self
   }
@@ -175,6 +185,9 @@ extension ViewController: UICollectionViewDataSource {
       leftView.backgroundColor = .gray.withAlphaComponent(0.3)
       leftView.prepare(text: "left 타이틀", textColor: .black)
       return leftView
+    case "MyBadgeView":
+      let badgeView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MyBadgeView", for: indexPath) as! MyBadgeView
+      return badgeView
     default:
       return UICollectionReusableView()
     }
