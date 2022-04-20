@@ -36,7 +36,7 @@ final class ViewController: UIViewController {
   ]
   
   static func getLayout() -> UICollectionViewCompositionalLayout {
-    UICollectionViewCompositionalLayout { (section, env) -> NSCollectionLayoutSection? in
+    let layout = UICollectionViewCompositionalLayout { (section, env) -> NSCollectionLayoutSection? in
       switch section {
       case 0:
         let itemFractionalWidthFraction = 1.0 / 5.0 // horizontal 5개의 셀
@@ -112,19 +112,27 @@ final class ViewController: UIViewController {
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: itemInset, leading: itemInset, bottom: itemInset, trailing: itemInset)
+        
+        // Decoration
+        let decorationView = NSCollectionLayoutDecorationItem.background(elementKind: "MyDecorationView")
+        decorationView.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        section.decorationItems = [decorationView]
+        
         return section
       }
     }
+    layout.register(MyDecorationView.self, forDecorationViewOfKind: "MyDecorationView")
+    return layout
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.addSubview(self.collectionView)
     NSLayoutConstraint.activate([
-      self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-      self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-      self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-      self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+      self.collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 20),
+      self.collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20),
+      self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -20),
+      self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
     ])
     self.collectionView.dataSource = self
   }

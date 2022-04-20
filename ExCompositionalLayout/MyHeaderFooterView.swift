@@ -20,7 +20,7 @@ final class MyHeaderFooterView: UICollectionReusableView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    self.backgroundColor = .gray
+    self.backgroundColor = .gray.withAlphaComponent(0.4)
     NSLayoutConstraint.activate([
       self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
       self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor),

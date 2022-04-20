@@ -10,6 +10,7 @@
 		C6372521281032200093E3A8 /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6372520281032200093E3A8 /* MyCell.swift */; };
 		C6372523281032350093E3A8 /* MySection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6372522281032350093E3A8 /* MySection.swift */; };
 		C63725252810328E0093E3A8 /* MyHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63725242810328E0093E3A8 /* MyHeaderFooterView.swift */; };
+		C6E401182810565B0072A2A7 /* MyDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E401172810565B0072A2A7 /* MyDecorationView.swift */; };
 		C6E4092D280ED94D00D8DCDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4092C280ED94D00D8DCDD /* AppDelegate.swift */; };
 		C6E4092F280ED94D00D8DCDD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E4092E280ED94D00D8DCDD /* SceneDelegate.swift */; };
 		C6E40931280ED94D00D8DCDD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E40930280ED94D00D8DCDD /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 		C6372520281032200093E3A8 /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
 		C6372522281032350093E3A8 /* MySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySection.swift; sourceTree = "<group>"; };
 		C63725242810328E0093E3A8 /* MyHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyHeaderFooterView.swift; sourceTree = "<group>"; };
+		C6E401172810565B0072A2A7 /* MyDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDecorationView.swift; sourceTree = "<group>"; };
 		C6E40929280ED94D00D8DCDD /* ExCompositionalLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExCompositionalLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6E4092C280ED94D00D8DCDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6E4092E280ED94D00D8DCDD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				C6E4092C280ED94D00D8DCDD /* AppDelegate.swift */,
 				C6E4092E280ED94D00D8DCDD /* SceneDelegate.swift */,
 				C6E40930280ED94D00D8DCDD /* ViewController.swift */,
+				C6E401172810565B0072A2A7 /* MyDecorationView.swift */,
 				C6372522281032350093E3A8 /* MySection.swift */,
 				C63725242810328E0093E3A8 /* MyHeaderFooterView.swift */,
 				C6372520281032200093E3A8 /* MyCell.swift */,
@@ -147,6 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6E401182810565B0072A2A7 /* MyDecorationView.swift in Sources */,
 				C6E40931280ED94D00D8DCDD /* ViewController.swift in Sources */,
 				C6372521281032200093E3A8 /* MyCell.swift in Sources */,
 				C6E4092D280ED94D00D8DCDD /* AppDelegate.swift in Sources */,
